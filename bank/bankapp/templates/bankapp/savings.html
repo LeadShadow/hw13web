@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LeadSite</title>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+</head>
+<body>
+<main class="container">
+    <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        <ul>
+            <li><a href="{{ back }}" role="button" class="secondary"> Go back</a></li>
+        </ul>
+    </nav>
+    <form method="post" action="/savings">
+        {% csrf_token %}
+        <div style="padding: 10px">
+            <label>Sum:
+                <input type="text" name="sum" required/>
+            </label>
+        </div>
+        <div style="padding: 10px">
+            <label>Select savings:
+                <select name="goods" multiple="multiple" required>
+                  {% for good in goods %}
+                    {% if good.goods_savings %}
+                      <option value="{{good.goods_savings}}">{{good.goods_savings}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="grid">
+            <button type="reset" class="secondary">Reset</button>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

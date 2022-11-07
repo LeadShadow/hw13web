@@ -59,7 +59,6 @@ def logoutuser(request):
 
 def show_savings(request):
     savings = Savings.objects.all()
-    print(savings)
     return render(request, 'bankapp/show_savings.html', {'back': '/', 'savings': savings})
 
 
@@ -68,8 +67,9 @@ def add_savings(request):
         goods = Goods.objects.all()
         return render(request, 'bankapp/savings.html', {'back': '/', 'goods': goods})
     if request.method == 'POST':
+        print('dawdaw')
         sum = int(request.POST['sum'])
-        good = request.POST.get('goods')
+        good = request.POST['goods']
         goods_db = Goods.objects.filter(goods_savings=good).first()
         saving = Savings(sum=sum, good_savings=goods_db, user_id=request.user)
         saving.save()
@@ -77,3 +77,23 @@ def add_savings(request):
         return render(request, 'bankapp/show_savings.html',
                       {'back': '/', 'savings': savings})
 
+
+def show_expenses(request):
+    expenses = Expenses.objects.all()
+    return render(request, 'bankapp/show_expenses.html', {'back': '/', 'expenses': expenses})
+
+
+def add_expenses(request):
+    if request.method == 'GET':
+        goods = Goods.objects.all()
+        return render(request, 'bankapp/expenses.html', {'back': '/', 'goods': goods})
+    if request.method == 'POST':
+        sum = int(request.POST['sum'])
+        good = request.POST['goods']
+        goods_db = Goods.objects.filter(goods_expenses=good).first()
+        expense = Expenses(sum=sum, good_expense=goods_db, user_id=request.user)
+        print(expense.time_expenses.date())
+        expense.save()
+        expenses = Expenses.objects.all()
+        return render(request, 'bankapp/show_expenses.html',
+                      {'back': '/', 'expenses': expenses})

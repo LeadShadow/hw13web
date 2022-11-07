@@ -15,7 +15,7 @@
             <li><a href="{{ back }}" role="button" class="secondary"> Go back</a></li>
         </ul>
     </nav>
-    <form method="post" action="/add_savings">
+    <form method="post" action="/add_expenses">
         {% csrf_token %}
         <div style="padding: 10px">
             <label>Sum:
@@ -24,10 +24,10 @@
         </div>
         <div style="padding: 10px">
             <label>Select savings:
-                <select name="goods" required>
+                <select name="goods" multiple="multiple" required>
                   {% for good in goods %}
-                    {% if good.goods_savings %}
-                      <option value="{{good.goods_savings}}">{{good.goods_savings}}</option>
+                    {% if good.goods_expenses %}
+                      <option value="{{good.goods_expenses}}">{{good.goods_expenses}}</option>
                     {% endif %}
                   {% endfor %}
                 </select>

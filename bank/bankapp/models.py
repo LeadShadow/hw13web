@@ -10,19 +10,20 @@ class Goods(models.Model):
 
 class Savings(models.Model):
     sum = models.IntegerField()
-    good = models.ManyToManyField(Goods)
+    good_savings = models.ForeignKey(Goods, on_delete=models.CASCADE, default='')
     time_saving = models.DateTimeField(default=datetime.now())
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True)
 
     def __str__(self):
-        return f'good: {self.good}, price: {self.sum}, time: {self.time_saving}'
+        return f'good: {self.good_savings}, price: {self.sum}, time: {self.time_saving}'
 
 
 class Expenses(models.Model):
     sum = models.IntegerField()
-    good = models.ManyToManyField(Goods)
+    good_expenses = models.ForeignKey(Goods, on_delete=models.CASCADE, default='')
     time_expenses = models.DateTimeField(default=datetime.now())
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=True)
 
     def __str__(self):
-        return f'good: {self.good}, price: {self.sum}, time: {self.time_expenses}'
+        return f'good: {self.good_expenses}, price: {self.sum}, time: {self.time_expenses}'
+

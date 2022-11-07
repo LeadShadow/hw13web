@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LeadSite</title>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+</head>
+<body>
+<main class="container">
+    <nav
+            style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px"
+    >
+        <ul>
+            <li><a href="{{ back }}" role="button" style="margin-left: 43px" class="secondary">Go back</a></li>
+        </ul>
+    </nav>
+    <h1 style="text-align: center">Savings</h1>
+    {% if savings %}
+        {% for saving in savings %}
+            <p>Name: <b>{{ saving.user_id }}</b></p>
+            <p>Sum: <b>{{ saving.sum }}</b></p>
+            <p>Category: <b>{{ saving.good_savings.goods_savings }}</b></p>
+            <p>Date: <b>{{ saving.time_saving }}</b></p>
+            <p style="border-bottom: 2px solid"></p>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+</main>
+</body>
+</html>

@@ -23,14 +23,17 @@
             <div class="" style="text-align: center; font-size: 40px">Hello I'm your money lover assistant</div>
             <div class="" style="text-align: center; font-size: 30px">Choose program:</div>
             <div class="grid">
-                <form action="/savings">
+                <form action="/show_savings">
                     <button type="submit" style="margin-top: 20px">Savings</button>
                 </form>
-                <form action="/show_note">
-                    <button type="submit" style="margin-top: 20px">Add Expenses/Savings</button>
+                <form action="/show_expenses">
+                        <button type="submit" style="margin-top: 20px">Expenses</button>
                 </form>
-                <form action="/show_note">
-                    <button type="submit" style="margin-top: 20px">Expenses</button>
+                <form action="/add_expenses">
+                    <button type="submit" style="margin-top: 20px">Add Expenses</button>
+                </form>
+                <form action="/add_savings">
+                    <button type="submit" style="margin-top: 20px">Add Savings</button>
                 </form>
             </div>
         {% else %}

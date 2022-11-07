@@ -7,12 +7,6 @@ import re
 from .models import User, Savings, Expenses, Goods
 
 
-goods = Goods.objects.all()
-for i in goods:
-    if i.goods_savings:
-        print(i.goods_savings)
-
-
 def main(request):
     if request.method == 'GET':
         user = ''
@@ -35,7 +29,8 @@ def signup(request):
             pass2 = re.search(pat, pass2)
             if pass1 and pass2:
                 try:
-                    user = User.objects.create_user(request.POST['login'], password=pass1.group(), date_joined=datetime.now())
+                    user = User.objects.create_user(request.POST['login'], password=pass1.group(),
+                                                    date_joined=datetime.now())
                     user.save()
                     return redirect('loginuser')
                 except IntegrityError as err:
@@ -62,18 +57,23 @@ def logoutuser(request):
     return redirect('main')
 
 
-def savings(request):
+def show_savings(request):
+    savings = Savings.objects.all()
+    print(savings)
+    return render(request, 'bankapp/show_savings.html', {'back': '/', 'savings': savings})
+
+
+def add_savings(request):
     if request.method == 'GET':
         goods = Goods.objects.all()
         return render(request, 'bankapp/savings.html', {'back': '/', 'goods': goods})
-    else:
+    if request.method == 'POST':
         sum = int(request.POST['sum'])
-        goods = request.POST.getlist('goods')
-        goods_db = ''
-        for i in goods:
-            goods_db = Goods.objects.filter(goods_savings=i).all()
-        saving = Savings(sum=sum, good=goods_db.set())
+        good = request.POST.get('goods')
+        goods_db = Goods.objects.filter(goods_savings=good).first()
+        saving = Savings(sum=sum, good_savings=goods_db, user_id=request.user)
         saving.save()
-        print(goods)
-        redirect('main')
+        savings = Savings.objects.all()
+        return render(request, 'bankapp/show_savings.html',
+                      {'back': '/', 'savings': savings})
 

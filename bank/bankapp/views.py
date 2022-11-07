@@ -79,8 +79,13 @@ def add_savings(request):
 
 
 def show_expenses(request):
-    expenses = Expenses.objects.all()
-    return render(request, 'bankapp/show_expenses.html', {'back': '/', 'expenses': expenses})
+    if request.method == 'GET':
+        expenses = Expenses.objects.all()
+        return render(request, 'bankapp/show_expenses.html', {'back': '/', 'expenses': expenses})
+    else:
+        sort = request.POST['sort']
+        print(sort)
+        return render(request, 'bankapp/show_expenses.html', {'back': '/'})
 
 
 def add_expenses(request):
@@ -92,8 +97,9 @@ def add_expenses(request):
         good = request.POST['goods']
         goods_db = Goods.objects.filter(goods_expenses=good).first()
         expense = Expenses(sum=sum, good_expense=goods_db, user_id=request.user)
-        print(expense.time_expenses.date())
         expense.save()
         expenses = Expenses.objects.all()
         return render(request, 'bankapp/show_expenses.html',
                       {'back': '/', 'expenses': expenses})
+
+
